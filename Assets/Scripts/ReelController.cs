@@ -1,13 +1,14 @@
+using System.Collections;
 using UnityEngine;
 
 public class ReelController : MonoBehaviour
 {
     public RectTransform[] symbols;
 
-    public float spinSpeed = 500f;
+    public float spinSpeed = 700f;
     public float symbolSpacing = 65f;
 
-    public bool spinning = false;
+    private bool spinning = false;
 
     void Update()
     {
@@ -19,17 +20,17 @@ public class ReelController : MonoBehaviour
 
             if (symbol.anchoredPosition.y < -symbolSpacing * 2)
             {
-                float highestY = GetHighestSymbolY();
+                float highest = GetHighestY();
 
                 symbol.anchoredPosition = new Vector2(
                     symbol.anchoredPosition.x,
-                    highestY + symbolSpacing
+                    highest + symbolSpacing
                 );
             }
         }
     }
 
-    float GetHighestSymbolY()
+    float GetHighestY()
     {
         float highest = symbols[0].anchoredPosition.y;
 
@@ -50,5 +51,19 @@ public class ReelController : MonoBehaviour
     public void StopSpin()
     {
         spinning = false;
+        SnapToGrid();
+    }
+
+    void SnapToGrid()
+    {
+        foreach (RectTransform symbol in symbols)
+        {
+            float y = Mathf.Round(symbol.anchoredPosition.y / symbolSpacing) * symbolSpacing;
+
+            symbol.anchoredPosition = new Vector2(
+                symbol.anchoredPosition.x,
+                y
+            );
+        }
     }
 }

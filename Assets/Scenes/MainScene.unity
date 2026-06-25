@@ -394,8 +394,8 @@ MonoBehaviour:
   - {fileID: 395871142}
   - {fileID: 14643142}
   - {fileID: 445020742}
-  spinSpeed: 300
-  spinning: 0
+  spinSpeed: 700
+  symbolSpacing: 65
 --- !u!1 &219293902
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,8 +887,8 @@ MonoBehaviour:
   - {fileID: 1933799946}
   - {fileID: 306510771}
   - {fileID: 313642863}
-  spinSpeed: 300
-  spinning: 0
+  spinSpeed: 700
+  symbolSpacing: 65
 --- !u!222 &365419684
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1719,8 +1719,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlotMachineController
   reel1: {fileID: 29562827}
-  reel2: {fileID: 0}
-  reel3: {fileID: 0}
+  reel2: {fileID: 2049812426}
+  reel3: {fileID: 365419683}
 --- !u!4 &1143592359
 Transform:
   m_ObjectHideFlags: 0
@@ -2361,8 +2361,8 @@ MonoBehaviour:
   - {fileID: 1377250300}
   - {fileID: 727094375}
   - {fileID: 2113681195}
-  spinSpeed: 300
-  spinning: 0
+  spinSpeed: 700
+  symbolSpacing: 65
 --- !u!222 &2049812427
 CanvasRenderer:
   m_ObjectHideFlags: 0
