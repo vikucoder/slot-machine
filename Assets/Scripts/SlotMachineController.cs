@@ -7,15 +7,26 @@ public class SlotMachineController : MonoBehaviour
     public ReelController reel2;
     public ReelController reel3;
 
+    public GameManager gameManager;
+
     private bool spinning = false;
 
     public void Spin()
-    {
-        if (spinning)
-            return;
+{
+    if (spinning)
+        return;
 
-        StartCoroutine(SpinRoutine());
-    }
+    if (!gameManager.SpendCredits())
+        return;
+
+    gameManager.GenerateSpin();
+
+    reel1.SetTargetSymbol(gameManager.reel1Result);
+    reel2.SetTargetSymbol(gameManager.reel2Result);
+    reel3.SetTargetSymbol(gameManager.reel3Result);    
+
+    StartCoroutine(SpinRoutine());
+}
 
     IEnumerator SpinRoutine()
     {
@@ -36,7 +47,6 @@ public class SlotMachineController : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
 
         reel3.StopSpin();
-
         spinning = false;
     }
 }

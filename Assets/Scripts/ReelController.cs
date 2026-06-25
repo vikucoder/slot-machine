@@ -9,6 +9,14 @@ public class ReelController : MonoBehaviour
     public float symbolSpacing = 65f;
 
     private bool spinning = false;
+    private int targetSymbol = 0;
+
+    // Fixed symbol order:
+    // 0 = 7
+    // 1 = Cherry
+    // 2 = Bell
+    // 3 = BAR
+    public int CurrentSymbol { get; private set; } = 0;
 
     void Update()
     {
@@ -42,6 +50,15 @@ public class ReelController : MonoBehaviour
 
         return highest;
     }
+    public void SetTargetSymbol(int symbolIndex)
+    {
+    targetSymbol = symbolIndex;
+    }
+
+        public int GetTargetSymbol()
+    {
+        return targetSymbol;
+    }   
 
     public void StartSpin()
     {
@@ -49,21 +66,24 @@ public class ReelController : MonoBehaviour
     }
 
     public void StopSpin()
-    {
-        spinning = false;
-        SnapToGrid();
-    }
+{
+    spinning = false;
+    SnapToGrid();
+}
 
-    void SnapToGrid()
-    {
-        foreach (RectTransform symbol in symbols)
-        {
-            float y = Mathf.Round(symbol.anchoredPosition.y / symbolSpacing) * symbolSpacing;
+   void SnapToGrid()
+{
+    System.Array.Sort(symbols, (a, b) =>
+        b.anchoredPosition.y.CompareTo(a.anchoredPosition.y));
 
-            symbol.anchoredPosition = new Vector2(
-                symbol.anchoredPosition.x,
-                y
-            );
-        }
+    float topY = 68f;   // Top visible position
+
+    for (int i = 0; i < symbols.Length; i++)
+    {
+        symbols[i].anchoredPosition = new Vector2(
+            symbols[i].anchoredPosition.x,
+            topY - i * symbolSpacing
+        );
     }
+}
 }
