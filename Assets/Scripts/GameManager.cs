@@ -10,7 +10,7 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     // ── Inspector ─────────────────────────────────────────────────────────────
-
+    
     [Header("Economy")]
     public int credits  = 1000;
     public int spinCost = 10;
@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public TMP_Text creditsText;
     public TMP_Text resultText;    // Optional — wire up a TMP label for win messages
+
+    public BetManager betManager;
 
     // ── RNG Results (read by SlotMachineController) ───────────────────────────
 
@@ -43,18 +45,20 @@ public class GameManager : MonoBehaviour
 
     /// <summary>Deducts spin cost. Returns false if player cannot afford.</summary>
     public bool SpendCredits()
+{
+    if (credits < betManager.currentBet)
     {
-        if (credits < spinCost)
-        {
-            Debug.Log("Not enough credits!");
-            SetResultText("Not enough credits!");
-            return false;
-        }
-
-        credits -= spinCost;
-        UpdateCreditsUI();
-        return true;
+        Debug.Log("Not enough credits!");
+        SetResultText("Not enough credits!");
+        return false;
     }
+
+    credits -= betManager.currentBet;
+
+    UpdateCreditsUI();
+
+    return true;
+}
 
     /// <summary>Rolls RNG for all three reels.</summary>
     public void GenerateSpin()

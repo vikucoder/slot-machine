@@ -15,6 +15,8 @@ public class SlotMachineController : MonoBehaviour
 
     public GameManager gameManager;
 
+    public BetManager betManager;
+
     [Tooltip("How long all reels spin before stopping begins.")]
     public float spinDuration = 2f;
 
@@ -31,7 +33,12 @@ public class SlotMachineController : MonoBehaviour
     public void Spin()
     {
         if (isSpinning) return;
-        if (!gameManager.SpendCredits()) return;
+        if (!gameManager.SpendCredits()){
+            betManager.ClearBet();
+            betManager.OpenBetMenu();   // reopen menu
+            return;
+
+        }
 
         // Generate RNG and push results to reels BEFORE spinning starts
         gameManager.GenerateSpin();
@@ -75,5 +82,9 @@ public class SlotMachineController : MonoBehaviour
         );
 
         isSpinning = false;
+        
+        betManager.ClearBet();
+        // Show betting menu for the next round
+        betManager.OpenBetMenu();
     }
 }
